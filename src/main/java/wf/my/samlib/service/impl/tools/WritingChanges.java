@@ -8,10 +8,11 @@ import java.util.Set;
 
 public class WritingChanges {
     public enum ChangeItem {
-        NAME,DESCRPTION,SIZE
+        NAME,DESCRIPTION,SIZE
     }
     private Set<ItemChanging> changes = new HashSet<>();
     private Date checkDate;
+    private Date prevChangeDate;
     private Writing writing;
 
     public Date getCheckDate() {
@@ -32,5 +33,17 @@ public class WritingChanges {
 
     public void setWriting(Writing writing) {
         this.writing = writing;
+    }
+
+    public Date getPrevChangeDate() {
+        return prevChangeDate;
+    }
+
+    public void setPrevChangeDate(Date prevChangeDate) {
+        this.prevChangeDate = prevChangeDate;
+    }
+
+    public boolean isChanged(){
+        return !changes.isEmpty();
     }
 }

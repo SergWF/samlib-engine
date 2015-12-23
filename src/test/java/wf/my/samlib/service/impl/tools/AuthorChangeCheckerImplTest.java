@@ -73,26 +73,39 @@ public class AuthorChangeCheckerImplTest {
 
     @Test
     public void testCheckNoChanges() throws Exception {
-        Assert.assertNull(authorChangeChecker.check(authorNoChanges, author));
+        Assert.assertFalse(authorChangeChecker.check(authorNoChanges, author, new Date()).isChanged());
     }
 
     @Test
     public void testCheckDeleted() throws Exception {
-        Assert.assertNull(authorChangeChecker.check(authorWithDeleted, author));
+        Assert.assertFalse(authorChangeChecker.check(authorWithDeleted, author, new Date()).isChanged());
     }
 
     @Test
     public void testCheckWithUpdates() throws Exception {
-        AuthorChanges actual = authorChangeChecker.check(authorWithUpdate, author);
-        Assert.assertTrue(actual.hasChanges());
+        AuthorChanges actual = authorChangeChecker.check(authorWithUpdate, author, new Date());
+        Assert.assertTrue(actual.isChanged());
         Assert.assertThat(actual,
                 Matchers.allOf(
-                        Matchers.hasProperty("writingChangesList",Matchers.hasSize(3)),
+                        Matchers.hasProperty("writingChangesList",Matchers.hasSize(4)),
                         Matchers.hasProperty("writingChangesList",
                                 Matchers.hasItems(
-                                        Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w1"))),
-                                        Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w2"))),
-                                        Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w3")))
+                                        Matchers.allOf(
+                                                Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w1"))),
+                                                Matchers.hasProperty("changed", Matchers.equalTo(true))
+                                        ),
+                                        Matchers.allOf(
+                                                Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w2"))),
+                                                Matchers.hasProperty("changed", Matchers.equalTo(true))
+                                        ),
+                                        Matchers.allOf(
+                                                Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w3"))),
+                                                Matchers.hasProperty("changed", Matchers.equalTo(true))
+                                        ),
+                                        Matchers.allOf(
+                                                Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w4"))),
+                                                Matchers.hasProperty("changed", Matchers.equalTo(false))
+                                        )
                                 )
                         )
                 )
@@ -100,17 +113,33 @@ public class AuthorChangeCheckerImplTest {
     }
     @Test
     public void testCheckWithNew() throws Exception {
-        AuthorChanges actual = authorChangeChecker.check(authorWithNew, author);
-        Assert.assertTrue(actual.hasChanges());
+        AuthorChanges actual = authorChangeChecker.check(authorWithNew, author, new Date());
+        Assert.assertTrue(actual.isChanged());
         Assert.assertThat(actual,
                 Matchers.allOf(
-                        Matchers.hasProperty("writingChangesList",Matchers.hasSize(4)),
+                        Matchers.hasProperty("writingChangesList",Matchers.hasSize(5)),
                         Matchers.hasProperty("writingChangesList",
                                 Matchers.hasItems(
-                                        Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w1"))),
-                                        Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w2"))),
-                                        Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w3"))),
-                                        Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w5")))
+                                        Matchers.allOf(
+                                                Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w1"))),
+                                                Matchers.hasProperty("changed", Matchers.equalTo(true))
+                                        ),
+                                        Matchers.allOf(
+                                                Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w2"))),
+                                                Matchers.hasProperty("changed", Matchers.equalTo(true))
+                                        ),
+                                        Matchers.allOf(
+                                                Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w3"))),
+                                                Matchers.hasProperty("changed", Matchers.equalTo(true))
+                                        ),
+                                        Matchers.allOf(
+                                                Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w4"))),
+                                                Matchers.hasProperty("changed", Matchers.equalTo(false))
+                                        ),
+                                        Matchers.allOf(
+                                                Matchers.hasProperty("writing", Matchers.hasProperty("url", Matchers.equalTo("http://a1/w5"))),
+                                                Matchers.hasProperty("changed", Matchers.equalTo(true))
+                                        )
                                 )
                         )
                 )

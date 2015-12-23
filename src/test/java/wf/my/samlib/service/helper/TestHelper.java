@@ -11,6 +11,7 @@ public class TestHelper {
 
     public static Writing getWriting(final String url, final String name, final String size, final String description, final Date updateDate){
        return new Writing() {
+            Date updDate = updateDate;
             @Override
             public String getUrl() {
                 return url;
@@ -23,10 +24,15 @@ public class TestHelper {
 
             @Override
             public Date getUpdateDate() {
-                return updateDate;
+                return updDate;
             }
 
-            @Override
+           @Override
+           public void setUpdatedDate(Date date) {
+               this.updDate = date;
+           }
+
+           @Override
             public String getSize() {
                 return size;
             }

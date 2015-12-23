@@ -18,20 +18,15 @@ public class AuthorChangeCheckerImpl implements AuthorChangeChecker {
     }
 
     @Override
-    public AuthorChanges check(Author newAuthor, Author existingAuthor){
+    public AuthorChanges check(Author newAuthor, Author existingAuthor, Date checkDate){
         List<WritingChanges> writingChangesList = new ArrayList<>(newAuthor.getWritings().size());
-        Date checkDate = new Date();
         for(Writing newWriting: newAuthor.getWritings()){
             Writing oldWriting = findWritingByUrl(existingAuthor.getWritings(), newWriting.getUrl());
             WritingChanges writingChanges = writingChangesChecker.check(oldWriting, newWriting, checkDate);
-            if(null != writingChanges) {
-                writingChangesList.add(writingChanges);
-            }
-        }
-        if(writingChangesList.isEmpty()){
-            return null;
+            writingChangesList.add(writingChanges);
         }
         AuthorChanges authorChanges = new AuthorChanges();
+        authorChanges.setAuthor(newAuthor);
         authorChanges.getWritingChangesList().addAll(writingChangesList);
         return authorChanges;
     }

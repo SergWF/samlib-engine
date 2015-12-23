@@ -14,13 +14,13 @@ public class WritingChangesCheckerImpl implements WritingChangesChecker {
         }
         WritingChanges writingChanges = new WritingChanges();
         addIfChanged(writingChanges, getChange(WritingChanges.ChangeItem.NAME, null == oldWriting ? null : oldWriting.getName(), newWriting.getName()));
-        addIfChanged(writingChanges, getChange(WritingChanges.ChangeItem.DESCRPTION, null == oldWriting ? null : oldWriting.getDescription(), newWriting.getDescription()));
+        addIfChanged(writingChanges, getChange(WritingChanges.ChangeItem.DESCRIPTION, null == oldWriting ? null : oldWriting.getDescription(), newWriting.getDescription()));
         addIfChanged(writingChanges, getChange(WritingChanges.ChangeItem.SIZE, null == oldWriting ? null : oldWriting.getSize(), newWriting.getSize()));
-        if(writingChanges.getChanges().isEmpty()){
-            return null;
-        }
         writingChanges.setCheckDate(checkDate);
         writingChanges.setWriting(newWriting);
+        if(null != oldWriting) {
+            writingChanges.setPrevChangeDate(oldWriting.getUpdateDate());
+        }
         return writingChanges;
     }
 

@@ -8,6 +8,7 @@ public interface Writing {
     String getName();
 
     Date getUpdateDate();
+    void setUpdatedDate(Date date);
 
     String getSize();
 

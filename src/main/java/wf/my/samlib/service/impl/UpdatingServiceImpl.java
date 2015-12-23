@@ -6,6 +6,8 @@ import wf.my.samlib.service.impl.tools.AuthorChanges;
 import wf.my.samlib.service.impl.tools.AuthorUpdaterImpl;
 import wf.my.samlib.storage.AuthorStorage;
 
+import java.util.Date;
+
 
 public class UpdatingServiceImpl implements UpdatingService {
 
@@ -23,9 +25,10 @@ public class UpdatingServiceImpl implements UpdatingService {
     @Override
     public UpdatingStatistic updateAuthors() {
         UpdatingStatistic statistic = new UpdatingStatistic();
+        Date checkDate = new Date();
         for(Author author : authorStorage.getAllAuthors()) {
-            AuthorChanges authorChanges = updater.updateAuthor(author);
-            if(authorChanges.hasChanges()){
+            AuthorChanges authorChanges = updater.updateAuthor(author, checkDate);
+            if(authorChanges.isChanged()){
                 statistic.add(authorChanges);
             }
         }

@@ -34,7 +34,7 @@ public class WritingChangesCheckerImplTest {
 
     @Test
     public void testNoChanges() throws Exception {
-        Assert.assertNull(writingChangesChecker.check(writing_old, writing111, new Date()));
+        Assert.assertFalse(writingChangesChecker.check(writing_old, writing111, new Date()).isChanged());
     }
 
     @Test
@@ -91,7 +91,7 @@ public class WritingChangesCheckerImplTest {
                         Matchers.hasProperty("changes",
                                 Matchers.hasItem(
                                         Matchers.allOf(
-                                                Matchers.hasProperty("paramName", Matchers.equalTo(WritingChanges.ChangeItem.DESCRPTION.name())),
+                                                Matchers.hasProperty("paramName", Matchers.equalTo(WritingChanges.ChangeItem.DESCRIPTION.name())),
                                                 Matchers.hasProperty("oldValue", Matchers.equalTo("old description")),
                                                 Matchers.hasProperty("newValue", Matchers.equalTo("new description"))
                                         )
@@ -117,7 +117,7 @@ public class WritingChangesCheckerImplTest {
                                                 Matchers.hasProperty("newValue", Matchers.equalTo("new name"))
                                         ),
                                         Matchers.allOf(
-                                                Matchers.hasProperty("paramName", Matchers.equalTo(WritingChanges.ChangeItem.DESCRPTION.name())),
+                                                Matchers.hasProperty("paramName", Matchers.equalTo(WritingChanges.ChangeItem.DESCRIPTION.name())),
                                                 Matchers.hasProperty("oldValue", Matchers.equalTo("old description")),
                                                 Matchers.hasProperty("newValue", Matchers.equalTo("new description"))
                                         ),
@@ -149,7 +149,7 @@ public class WritingChangesCheckerImplTest {
                                                 Matchers.hasProperty("newValue", Matchers.equalTo("new name"))
                                         ),
                                         Matchers.allOf(
-                                                Matchers.hasProperty("paramName", Matchers.equalTo(WritingChanges.ChangeItem.DESCRPTION.name())),
+                                                Matchers.hasProperty("paramName", Matchers.equalTo(WritingChanges.ChangeItem.DESCRIPTION.name())),
                                                 Matchers.hasProperty("oldValue", Matchers.nullValue()),
                                                 Matchers.hasProperty("newValue", Matchers.equalTo("new description"))
                                         ),
