@@ -1,11 +1,51 @@
 package wf.my.samlib.entity;
 
+import wf.my.samlib.tools.AuthorTools;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public interface Author {
-    String getUrl();
-    Date getUpdateDate();
-    List<Writing> getWritings();
-    Date getLastChangedDate();
+public class Author implements UpdateDateComparable {
+    private String url;
+    private String name;
+    private List<Writing> writings = new ArrayList<>();
+    private Date lastCheckedDate;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @Override
+    public Date getUpdateDate() {
+        return AuthorTools.getLastUpdatedDate(this);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Writing> getWritings() {
+        return writings;
+    }
+
+    public void setWritings(List<Writing> writings) {
+        this.writings = writings;
+    }
+
+    public Date getLastCheckedDate() {
+        return lastCheckedDate;
+    }
+
+    public void setLastCheckedDate(Date lastCheckedDate) {
+        this.lastCheckedDate = lastCheckedDate;
+    }
 }

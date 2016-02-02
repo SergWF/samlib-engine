@@ -1,4 +1,4 @@
-package wf.my.samlib.service.tools;
+package wf.my.samlib.service.components;
 
 import wf.my.samlib.entity.Author;
 

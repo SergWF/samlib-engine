@@ -1,7 +1,8 @@
 package wf.my.samlib.service;
 
-import wf.my.samlib.service.impl.UpdatingStatistic;
+import wf.my.samlib.entity.UpdateState;
 
 public interface UpdatingService {
-    UpdatingStatistic updateAuthors();
+    boolean updateAuthors();
+    UpdateState getUpdateState();
 }

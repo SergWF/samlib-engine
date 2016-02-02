@@ -1,6 +1,6 @@
-package wf.my.samlib.service.impl.tools;
+package wf.my.samlib.service.components.impl;
 
-import wf.my.samlib.service.tools.AuthorPageReader;
+import wf.my.samlib.service.components.AuthorPageReader;
 
 public class AuthorPageReaderImpl implements AuthorPageReader {
     @Override

@@ -1,7 +1,7 @@
-package wf.my.samlib.service.impl.tools;
+package wf.my.samlib.service.components.impl;
 
 import wf.my.samlib.entity.Author;
-import wf.my.samlib.service.tools.AuthorPageParser;
+import wf.my.samlib.service.components.AuthorPageParser;
 
 public class AuthorPageParseImpl implements AuthorPageParser {
     @Override

@@ -1,16 +1,81 @@
 package wf.my.samlib.entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-public interface Writing {
-    String getUrl();
+public class Writing implements UpdateDateComparable {
+    private String id;
+    private String url;
+    private Author author;
+    private String name;
+    private Date updateDate;
+    private Integer size = 0;
+    private String description = "";
+    private Set<WritingHistoryItem> history = new HashSet<>();
 
-    String getName();
+    public String getId() {
+        return id;
+    }
 
-    Date getUpdateDate();
-    void setUpdatedDate(Date date);
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    String getSize();
+    public String getUrl() {
+        return url;
+    }
 
-    String getDescription();
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Set<WritingHistoryItem> getHistory() {
+        return history;
+    }
+
+    public void setHistory(Set<WritingHistoryItem> history) {
+        this.history = history;
+    }
 }
