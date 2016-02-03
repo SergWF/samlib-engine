@@ -4,7 +4,9 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import wf.my.samlib.TestHelper;
 import wf.my.samlib.entity.Author;
@@ -15,7 +17,7 @@ import wf.my.samlib.storage.AuthorStorage;
 
 import java.util.Date;
 
-public class AuthorUpdaterImplTest {
+public class AuthorCheckerImplTest {
 
     public static final String URL = "w1u";
     public static final String NAME = "w1n";
@@ -23,14 +25,19 @@ public class AuthorUpdaterImplTest {
     public static final Integer SIZE = 100;
 
 
-    private AuthorUpdaterImpl authorUpdater = Mockito.spy(AuthorUpdaterImpl.class);
+    @Spy
+    private AuthorCheckerImpl authorUpdater;
     private Date checkDate;
-    private AuthorPageReader reader = Mockito.mock(AuthorPageReader.class);
-    private AuthorPageParser parser = Mockito.mock(AuthorPageParser.class);
-    private AuthorStorage storage = Mockito.mock(AuthorStorage.class);
+    @Mock
+    private AuthorPageReader reader;
+    @Mock
+    private AuthorPageParser parser;
+    @Mock
+    private AuthorStorage storage;
 
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
         checkDate = TestHelper.SDF.parse("2015.10.25 14:00:00");
         authorUpdater.setWritingChangesChecker(new WritingChangesChecker());
         authorUpdater.setAuthorPageReader(reader);
@@ -125,9 +132,10 @@ public class AuthorUpdaterImplTest {
         Date checkDate = TestHelper.SDF.parse("2015.09.20 14:00:00");
         Writing writing1 = TestHelper.getWriting("w1u", "w1n", 100, "w1d", checkDate);
         Writing writing2 = TestHelper.getWriting("w2u", "w2n", 200, "w2d", checkDate);
-        Author author = TestHelper.getAuthor(url, "a2", writing1, writing2);
-        Mockito.doReturn(author).when(parser).parsePage(Mockito.anyString());
-        authorUpdater.updateAuthor(url, checkDate);
+        Author parsedAuthor = TestHelper.getAuthor(url, "a1", writing1, writing2);
+        Author old = TestHelper.getAuthor(url, "a1");
+        Mockito.doReturn(parsedAuthor).when(parser).parsePage(Mockito.anyString());
+        authorUpdater.updateAuthor(old, checkDate);
         Mockito.verify(authorUpdater).updateWritingHistory(Mockito.eq(writing1), Mockito.any(Writing.class), Mockito.eq(checkDate));
         Mockito.verify(authorUpdater).updateWritingHistory(Mockito.eq(writing2), Mockito.any(Writing.class), Mockito.eq(checkDate));
     }

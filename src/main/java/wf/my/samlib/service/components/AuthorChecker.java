@@ -4,6 +4,6 @@ import wf.my.samlib.entity.Author;
 
 import java.util.Date;
 
-public interface AuthorUpdater {
-    Author updateAuthor(String url, Date checkDate);
+public interface AuthorChecker {
+    Author updateAuthor(Author author, Date checkDate);
 }

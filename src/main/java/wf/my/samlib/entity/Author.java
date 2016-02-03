@@ -1,8 +1,10 @@
 package wf.my.samlib.entity;
 
+import wf.my.samlib.comparator.UpdateDateComparator;
 import wf.my.samlib.tools.AuthorTools;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +24,10 @@ public class Author implements UpdateDateComparable {
 
     @Override
     public Date getUpdateDate() {
-        return AuthorTools.getLastUpdatedDate(this);
+        if(null ==writings || writings.isEmpty()){
+            return null;
+        }
+        return Collections.max(writings, new UpdateDateComparator()).getUpdateDate();
     }
 
     public String getName() {

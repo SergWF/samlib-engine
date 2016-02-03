@@ -7,7 +7,7 @@ import wf.my.samlib.entity.UpdateState;
 import wf.my.samlib.entity.Writing;
 import wf.my.samlib.listener.AuthorRenewListener;
 import wf.my.samlib.service.UpdatingService;
-import wf.my.samlib.service.components.AuthorUpdater;
+import wf.my.samlib.service.components.AuthorChecker;
 import wf.my.samlib.storage.AuthorStorage;
 import wf.my.samlib.tools.AuthorTools;
 
@@ -21,7 +21,7 @@ public class UpdatingServiceImpl implements UpdatingService {
 
     private static final Logger logger = LoggerFactory.getLogger(UpdatingServiceImpl.class);
     private AuthorStorage authorStorage;
-    private AuthorUpdater updater;
+    private AuthorChecker authorChecker;
     private UpdateState updateState;
     private Set<AuthorRenewListener> authorRenewListeners = new HashSet<>();
 
@@ -29,12 +29,12 @@ public class UpdatingServiceImpl implements UpdatingService {
         this.authorStorage = authorStorage;
     }
 
-    public void setUpdater(AuthorUpdater updater) {
-        this.updater = updater;
+    public void setAuthorChecker(AuthorChecker authorChecker) {
+        this.authorChecker = authorChecker;
     }
 
     @Override
-    public synchronized boolean updateAuthors() {
+    public boolean updateAuthors() {
         updateState = getUpdateState();
         if(updateState.isInProcess()){
             logger.warn("Update in process");
@@ -44,15 +44,19 @@ public class UpdatingServiceImpl implements UpdatingService {
         Collection<Author> authors = authorStorage.getAllAuthors();
         updateState.setAuthorsTotal(authors.size());
         for(Author author : authors) {
-            Author checkedAuthor = updater.updateAuthor(author.getUrl(), updateState.getStartDate());
+            Author checkedAuthor = authorChecker.updateAuthor(author, updateState.getStartDate());
             authorStorage.saveAuthor(checkedAuthor);
             updateState.increaseChecked();
-            if(AuthorTools.isAuthorUpdated(checkedAuthor, updateState.getStartDate())){
+            if(isAuthorUpdated(checkedAuthor, updateState.getStartDate())){
                 raiseAuthorUpdatedEvent(author, updateState.getStartDate());
             }
         }
         updateState.setEndDate(new Date());
         return true;
+    }
+
+    protected boolean isAuthorUpdated(Author author, Date checkDate){
+        return AuthorTools.isAuthorUpdated(author, checkDate);
     }
 
     private void raiseAuthorUpdatedEvent(Author author, Date updateDate) {

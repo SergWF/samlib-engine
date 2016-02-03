@@ -3,7 +3,7 @@ package wf.my.samlib.tools;
 import wf.my.samlib.comparator.UpdateDateComparator;
 import wf.my.samlib.entity.Author;
 import wf.my.samlib.entity.Writing;
-import wf.my.samlib.error.UrlNotExistsException;
+import wf.my.samlib.error.NoUrlException;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -26,16 +26,10 @@ public class AuthorTools {
         return null != lastUpdatedWriting && !checkDate.after(lastUpdatedWriting.getUpdateDate());
     }
 
-    public static Date getLastUpdatedDate(Author author){
-        if(null ==author.getWritings() || author.getWritings().isEmpty()){
-            return null;
-        }
-        return Collections.max(author.getWritings(), new UpdateDateComparator()).getUpdateDate();
-    }
 
     public static Writing findWritingByUrl(Collection<Writing> writings, String url) {
         if(null == url || url.trim().isEmpty()){
-            throw new UrlNotExistsException();
+            throw new NoUrlException();
         }
         for(Writing writing: writings){
             if(url.equals(writing.getUrl())){

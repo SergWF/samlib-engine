@@ -5,13 +5,13 @@ import wf.my.samlib.entity.Writing;
 import wf.my.samlib.entity.WritingHistoryItem;
 import wf.my.samlib.service.components.AuthorPageParser;
 import wf.my.samlib.service.components.AuthorPageReader;
-import wf.my.samlib.service.components.AuthorUpdater;
+import wf.my.samlib.service.components.AuthorChecker;
 import wf.my.samlib.storage.AuthorStorage;
 import wf.my.samlib.tools.AuthorTools;
 
 import java.util.Date;
 
-public class AuthorUpdaterImpl implements AuthorUpdater {
+public class AuthorCheckerImpl implements AuthorChecker {
 
     private AuthorPageReader authorPageReader;
     private AuthorPageParser authorPageParser;
@@ -37,13 +37,12 @@ public class AuthorUpdaterImpl implements AuthorUpdater {
 
 
     @Override
-    public Author updateAuthor(String url, Date checkDate) {
-        String pageString = authorPageReader.readPage(url);
-        Author author = authorPageParser.parsePage(pageString);
+    public Author updateAuthor(Author author, Date checkDate) {
+        String pageString = authorPageReader.readPage(author.getUrl());
+        Author parsedData = authorPageParser.parsePage(pageString);
         author.setLastCheckedDate(checkDate);
-        Author oldData = authorStorage.getAuthorByUrl(url);
-        updateHistory(author, oldData, checkDate);
-        return author;
+        updateHistory(parsedData, author, checkDate);
+        return parsedData;
     }
 
     private void updateHistory(Author author, Author oldData, Date checkDate) {
