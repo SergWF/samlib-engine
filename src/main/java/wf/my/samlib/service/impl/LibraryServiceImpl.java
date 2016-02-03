@@ -12,6 +12,10 @@ public class LibraryServiceImpl implements LibraryService {
 
     private AuthorStorage authorStorage;
 
+    public void setAuthorStorage(AuthorStorage authorStorage) {
+        this.authorStorage = authorStorage;
+    }
+
     @Override
     public Author addAuthorByUrl(String url) {
         Author author = authorStorage.getAuthorByUrl(url);

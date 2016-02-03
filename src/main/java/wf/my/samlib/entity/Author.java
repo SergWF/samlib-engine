@@ -53,4 +53,24 @@ public class Author implements UpdateDateComparable {
     public void setLastCheckedDate(Date lastCheckedDate) {
         this.lastCheckedDate = lastCheckedDate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) {
+            return true;
+        }
+        if(o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Author author = (Author) o;
+
+        return getUrl().equals(author.getUrl());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getUrl().hashCode();
+    }
 }
