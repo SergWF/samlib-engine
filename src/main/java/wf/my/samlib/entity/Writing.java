@@ -12,6 +12,7 @@ public class Writing implements UpdateDateComparable {
     private Date updateDate;
     private Integer size = 0;
     private String description = "";
+    private String section;
     private Set<WritingHistoryItem> history = new HashSet<>();
 
     public String getId() {
@@ -77,5 +78,13 @@ public class Writing implements UpdateDateComparable {
 
     public void setHistory(Set<WritingHistoryItem> history) {
         this.history = history;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
     }
 }

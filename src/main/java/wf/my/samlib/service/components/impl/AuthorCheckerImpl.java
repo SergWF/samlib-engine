@@ -40,6 +40,7 @@ public class AuthorCheckerImpl implements AuthorChecker {
     public Author updateAuthor(Author author, Date checkDate) {
         String pageString = authorPageReader.readPage(author.getUrl());
         Author parsedData = authorPageParser.parsePage(pageString);
+        parsedData.setUrl(author.getUrl());
         author.setLastCheckedDate(checkDate);
         updateHistory(parsedData, author, checkDate);
         return parsedData;
