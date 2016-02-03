@@ -1,5 +1,7 @@
 package wf.my.samlib.entity;
 
+import wf.my.samlib.comparator.UpdateDateComparable;
+
 import java.util.Date;
 
 /*

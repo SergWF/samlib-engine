@@ -1,8 +1,5 @@
 package wf.my.samlib.comparator;
 
-import wf.my.samlib.entity.UpdateDateComparable;
-import wf.my.samlib.entity.Writing;
-
 import java.util.Comparator;
 
 public class UpdateDateComparator implements Comparator<UpdateDateComparable> {

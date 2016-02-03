@@ -1,4 +1,4 @@
-package wf.my.samlib.entity;
+package wf.my.samlib.comparator;
 
 import java.util.Date;
 

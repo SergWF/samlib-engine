@@ -1,7 +1,7 @@
 package wf.my.samlib.entity;
 
+import wf.my.samlib.comparator.UpdateDateComparable;
 import wf.my.samlib.comparator.UpdateDateComparator;
-import wf.my.samlib.tools.AuthorTools;
 
 import java.util.ArrayList;
 import java.util.Collections;
