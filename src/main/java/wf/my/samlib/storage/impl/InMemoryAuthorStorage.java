@@ -15,6 +15,24 @@ public class InMemoryAuthorStorage implements AuthorStorage {
     private static final Logger logger = LoggerFactory.getLogger(InMemoryAuthorStorage.class);
     private Set<Author> authors = new HashSet<>();
 
+    private static volatile InMemoryAuthorStorage instance;
+
+    public static InMemoryAuthorStorage getInstance() {
+        InMemoryAuthorStorage localInstance = instance;
+        if (localInstance == null) {
+            synchronized (InMemoryAuthorStorage.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new InMemoryAuthorStorage();
+                }
+            }
+        }
+        return localInstance;
+    }
+
+    protected InMemoryAuthorStorage() {
+    }
+
     @Override
     public Author getAuthorByUrl(String url) {
         logger.debug("search for author by url [{}]", url);
