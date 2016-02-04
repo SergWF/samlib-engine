@@ -2,11 +2,13 @@ group 'wf.my.samlib'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'idea'
+
 compileJava {
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
 }
-apply plugin: 'idea'
+
 
 ext {
     slf4jVersion = '1.7.12'

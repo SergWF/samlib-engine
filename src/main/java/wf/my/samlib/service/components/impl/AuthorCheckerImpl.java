@@ -3,10 +3,9 @@ package wf.my.samlib.service.components.impl;
 import wf.my.samlib.entity.Author;
 import wf.my.samlib.entity.Writing;
 import wf.my.samlib.entity.WritingHistoryItem;
+import wf.my.samlib.service.components.AuthorChecker;
 import wf.my.samlib.service.components.AuthorPageParser;
 import wf.my.samlib.service.components.AuthorPageReader;
-import wf.my.samlib.service.components.AuthorChecker;
-import wf.my.samlib.storage.AuthorStorage;
 import wf.my.samlib.tools.AuthorTools;
 
 import java.util.Date;
@@ -15,7 +14,6 @@ public class AuthorCheckerImpl implements AuthorChecker {
 
     private AuthorPageReader authorPageReader;
     private AuthorPageParser authorPageParser;
-    private AuthorStorage authorStorage;
     private WritingChangesChecker writingChangesChecker;
 
 
@@ -27,9 +25,6 @@ public class AuthorCheckerImpl implements AuthorChecker {
         this.authorPageParser = authorPageParser;
     }
 
-    public void setAuthorStorage(AuthorStorage authorStorage) {
-        this.authorStorage = authorStorage;
-    }
 
     public void setWritingChangesChecker(WritingChangesChecker writingChangesChecker) {
         this.writingChangesChecker = writingChangesChecker;

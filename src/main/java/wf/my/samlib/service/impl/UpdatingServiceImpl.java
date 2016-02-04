@@ -23,6 +23,7 @@ public class UpdatingServiceImpl implements UpdatingService {
     private AuthorStorage authorStorage;
     private AuthorChecker authorChecker;
     private UpdateState updateState;
+    private Long updatePause = 10000L;
     private Set<AuthorRenewListener> authorRenewListeners = new HashSet<>();
 
     public void setAuthorStorage(AuthorStorage authorStorage) {
@@ -31,6 +32,14 @@ public class UpdatingServiceImpl implements UpdatingService {
 
     public void setAuthorChecker(AuthorChecker authorChecker) {
         this.authorChecker = authorChecker;
+    }
+
+    public Long getUpdatePause() {
+        return updatePause;
+    }
+
+    public void setUpdatePause(Long updatePause) {
+        this.updatePause = updatePause;
     }
 
     @Override
@@ -50,9 +59,18 @@ public class UpdatingServiceImpl implements UpdatingService {
             if(isAuthorUpdated(checkedAuthor, updateState.getStartDate())){
                 raiseAuthorUpdatedEvent(author, updateState.getStartDate());
             }
+            makePause();
         }
         updateState.setEndDate(new Date());
         return true;
+    }
+
+    protected void makePause(){
+        try {
+            Thread.sleep(updatePause);
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     protected boolean isAuthorUpdated(Author author, Date checkDate){
